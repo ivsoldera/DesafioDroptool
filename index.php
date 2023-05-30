@@ -26,10 +26,9 @@ function classificaItens($nome, $qtdMinimaVendas, $qtdMinimaDenuncias){
     }
 
     $results = $db->sql($query, $params);
-    var_dump($results);
 
-
-    foreach ($results as $row) {
+    if(!empty($results)) {
+      foreach ($results as $row) {
         // Atualizar o status do item para 'Suspeito' -> 90
         $db->sql("UPDATE itens SET status = 90 WHERE id = :item_id", [':item_id' => $row['id']]);
 
@@ -45,7 +44,8 @@ function classificaItens($nome, $qtdMinimaVendas, $qtdMinimaDenuncias){
                 ':data_suspeito' => $dataSuspeito
             ]);
         }
-    }    
+      }    
+    }
 }
 
 // Chama a função com os paramentros de classificação
